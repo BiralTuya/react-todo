@@ -1,29 +1,33 @@
-import React from "react";
+import React , {useState} from "react";
 import InputTodo from "./InputTodo";
 import TodoList from "./TodoList";
+import { v4 as uuidv4 } from "uuid";
 
 const TodoLogic = () => {
-    const todos = [
-        {
-          id: 1,
-          title: 'Setup development environment',
-          completed: true,
-        },
-        {
-          id: 2,
-          title: 'Develop website and add content',
+    const [todo, setTodo] = useState([]);
+
+      const delTodo = (id) => {
+        console.log('deleted', id);
+        setTodo([
+          ...todo.filter((todo) => {
+            return todo.id !== id;
+          }),
+        ]);
+      };
+
+      const addTodoItem = (title) => {
+        const newTodo = {
+          id: uuidv4(),
+          title: title,
           completed: false,
-        },
-        {
-          id: 3,
-          title: 'Deploy to live server',
-          completed: false,
-        },
-      ];
+        };
+        setTodo([...todo, newTodo]);
+      };
+
     return (
       <div>
-        <InputTodo />
-        <TodoList todosProps={todos} />
+        <InputTodo addTodoItem={addTodoItem}/>
+        <TodoList todoProps={todo} setTodo={setTodo} delTodo={delTodo}/>
         </div>
     )
   }

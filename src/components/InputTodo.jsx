@@ -4,12 +4,20 @@ import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
 
-const InputTodo = () => {
-  const [InputTodo, setInputTodo] = useState("")
+const InputTodo = ({addTodoItem}) => {
+  const [InputTodo, setInputTodo] = useState("");
 
   const handleChange = (e) => {
     setInputTodo(e.target.value);
-    console.log(InputTodo);
+  };
+  const handleClick = () => {
+    if (InputTodo.trim()) {
+      console.log(InputTodo);
+      addTodoItem(InputTodo);
+      setInputTodo('');
+    } else {
+      alert('Please add item');
+    }
   };
 
     return(
@@ -18,7 +26,7 @@ const InputTodo = () => {
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
-              <IconButton>
+              <IconButton onClick={handleClick}>
                 <AddIcon />
               </IconButton>
             </InputAdornment>
